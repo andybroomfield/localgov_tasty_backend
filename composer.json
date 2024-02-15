@@ -1,0 +1,15 @@
+{
+  "name": "localgovdrupal/localgov_tasty_backend",
+  "description": "Tasty backend intergration with Localgov Drupal",
+  "type": "drupal-module",
+  "homepage": "https://github.com/localgovdrupal/localgov_tasty_backend",
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "dev",
+  "require": {
+      "drupal/tasty_backend": "^1.0@beta",
+      "drupal/tasty_backend_gin": "^1.0@alpha",
+      "drupal/tasty_backend_media": "^1.0@beta",
+      "localgovdrupal/localgov_core": "^2.13.0",
+      "php": ">=8.0.0"
+  }
+}

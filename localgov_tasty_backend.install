@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the Localgov tasty backend module.
+ */
+
+use Drupal\user\Entity\Role;
+
+/**
+ * Implements hook_install().
+ */
+function localgov_tasty_backend_install($is_syncing) {
+
+  // Don't do anything on config sync operations.
+  if ($is_syncing) {
+    return;
+  }
+
+  // If admin theme is gin, also install tasty_backend_gin.
+  $admin_theme = \Drupal::config('system.theme')->get('admin');
+  $admin_theme_name = \Drupal::service('theme_handler')->getName($admin_theme);
+  if ($admin_theme_name == 'Gin') {
+    \Drupal::service('module_installer')->install(['tasty_backend_gin'], TRUE);
+    \Drupal::configFactory()
+      ->getEditable('gin.settings')
+      ->set('classic_toolbar', 'classic')
+      ->save();
+  }
+
+  // Rename the manage menu to administration.
+  \Drupal::configFactory()
+    ->getEditable('toolbar_menu.toolbar_menu_element.tb_manage')
+    ->set('label', 'Administration')
+    ->save();
+
+  // Delete tasty backend user_admin role in favour of localgov_user_manager.
+  $tb_manage_users = \Drupal::configFactory()
+    ->getEditable('views.view.tb_manage_users');
+  $dependencies = $tb_manage_users->get('dependencies.config');
+  $dependencies = array_filter($dependencies, function ($item) {
+    return $item != 'user.role.user_admin' ? $item : NULL;
+  });
+  $tb_manage_users->set('dependencies.config', $dependencies);
+  $tb_manage_users->clear('display.default.filters.roles_target_id.value.user_admin');
+  $tb_manage_users->clear('display.default.filters.roles_target_id.expose.remember_roles.user_admin');
+  $tb_manage_users->save();
+  Role::load('user_admin')?->delete();
+
+  // Flush all caches to refresh menus.
+  drupal_flush_all_caches();
+}

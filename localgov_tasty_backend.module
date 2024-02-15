@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * Localgov tasty backend module file.
+ */
+
+use Drupal\localgov_roles\RolesHelper;
+
+/**
+ * Implements hook_localgov_roles_default().
+ */
+function localgov_tasty_backend_localgov_roles_default(): array {
+
+  // Grant tasty backend permissions to localgov roles.
+  $tb_permissions = [
+    'access tasty backend admin pages',
+    'view tb_manage in toolbar',
+  ];
+  $perms = [
+    RolesHelper::EDITOR_ROLE => $tb_permissions,
+    RolesHelper::AUTHOR_ROLE => $tb_permissions,
+    RolesHelper::CONTRIBUTOR_ROLE => $tb_permissions,
+
+    // Allow user manager to assign content admin role.
+    'localgov_user_manager' => [
+      'assign content_admin role',
+      'assign tb_media_admin role',
+    ],
+  ];
+
+  return $perms;
+}
