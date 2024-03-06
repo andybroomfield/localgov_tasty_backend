@@ -6,6 +6,7 @@
  */
 
 use Drupal\localgov_roles\RolesHelper;
+use Drupal\user\Entity\Role;
 
 /**
  * Implements hook_localgov_roles_default().
@@ -28,6 +29,38 @@ function localgov_tasty_backend_localgov_roles_default(): array {
       'assign tb_media_admin role',
     ],
   ];
+
+  // Get a list of all vocalbularies for checking permissions.
+  $vocabularies = \Drupal::entityTypeManager()->getStorage('taxonomy_vocabulary')->getQuery()->execute();
+
+  // Load all roles for checking if additional permissions need to be assigned.
+  $roles = Role::loadMultiple();
+  foreach ($roles as $role) {
+
+    // Check if a role has any taxonomy permissions, and if so assign the role
+    // the access taxonomy overview so the role can access the taxonomy menu.
+    $has_term_permission = FALSE;
+    foreach ($vocabularies as $vocabulary) {
+      $create = $role->hasPermission('create terms in ' . $vocabulary);
+      $edit = $role->hasPermission('edit terms in ' . $vocabulary);
+      $delete = $role->hasPermission('delete terms in ' . $vocabulary);
+      if ($create || $edit || $delete) {
+        $has_term_permission = TRUE;
+        break;
+      }
+    }
+    if ($has_term_permission) {
+      $perms[$role->id()][] = 'access taxonomy overview';
+    }
+
+    // If the role can access media overview, assign the role tasty backend
+    // equivilent permission.
+    // @todo Check if we should remove the access media overview permission.
+    if ($role->hasPermission('access media overview')) {
+      $perms[$role->id()][] = 'access tasty backend media admin pages';
+    }
+
+  }
 
   return $perms;
 }
