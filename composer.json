@@ -9,7 +9,7 @@
       "drupal/tasty_backend": "^1.0@beta",
       "drupal/tasty_backend_gin": "^1.0@alpha",
       "drupal/tasty_backend_media": "^1.0@beta",
-      "localgovdrupal/localgov_core": "^2.13.0",
+      "localgovdrupal/localgov_core": "^2.13.1",
       "php": ">=8.0.0"
   }
 }
