@@ -24,9 +24,10 @@ function localgov_tasty_backend_localgov_roles_default(): array {
     RolesHelper::CONTRIBUTOR_ROLE => $tb_permissions,
 
     // Allow user manager to assign content admin role.
-    'localgov_user_manager' => [
+    RolesHelper::USER_MANAGER_ROLE => [
       'assign content_admin role',
       'assign tb_media_admin role',
+      'view tb_manage in toolbar',
     ],
   ];
 
