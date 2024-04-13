@@ -7,6 +7,7 @@
 
 use Drupal\localgov_roles\RolesHelper;
 use Drupal\user\Entity\Role;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 /**
  * Implements hook_localgov_roles_default().
@@ -18,6 +19,7 @@ function localgov_tasty_backend_localgov_roles_default(): array {
     'access tasty backend admin pages',
     'view tb_manage in toolbar',
   ];
+
   $perms = [
     RolesHelper::EDITOR_ROLE => $tb_permissions,
     RolesHelper::AUTHOR_ROLE => $tb_permissions,
@@ -64,4 +66,123 @@ function localgov_tasty_backend_localgov_roles_default(): array {
   }
 
   return $perms;
+}
+
+/**
+ * Implements hook_menu_links_discovered_alter().
+ */
+function localgov_tasty_backend_menu_links_discovered_alter(&$links) {
+
+  // Populate the site features menu.
+  // URL alias.
+  if (_localgov_tasty_backend_route_exists('entity.path_alias.collection')) {
+    $links['localgov_tasty_backend.path_alias.collection'] = [
+      'title' => t('URL aliases'),
+      'route_name' => 'entity.path_alias.collection',
+      'parent' => 'localgov_tasty_backend.manage_site_page',
+      'menu_name' => 'tb-manage',
+    ];
+  }
+  // URL redirects.
+  if (_localgov_tasty_backend_route_exists('redirect.list')) {
+    $links['localgov_tasty_backend.redirect.list'] = [
+      'title' => t('URL redirects'),
+      'route_name' => 'redirect.list',
+      'parent' => 'localgov_tasty_backend.manage_site_page',
+      'menu_name' => 'tb-manage',
+    ];
+  }
+  // Alert banners.
+  if (_localgov_tasty_backend_route_exists('entity.localgov_alert_banner.collection')) {
+    $links['localgov_tasty_backend.entity.localgov_alert_banner.collection'] = [
+      'title' => t('Alert banners'),
+      'route_name' => 'entity.localgov_alert_banner.collection',
+      'parent' => 'localgov_tasty_backend.manage_site_page',
+      'menu_name' => 'tb-manage',
+    ];
+  }
+  // Page components.
+  if (_localgov_tasty_backend_route_exists('entity.paragraphs_library_item.collection')) {
+    $links['localgov_tasty_backend.entity.paragraphs_library_item.collection'] = [
+      'title' => t('Page components'),
+      'route_name' => 'entity.paragraphs_library_item.collection',
+      'parent' => 'localgov_tasty_backend.manage_site_page',
+      'menu_name' => 'tb-manage',
+    ];
+  }
+  // Locations.
+  if (_localgov_tasty_backend_route_exists('entity.geo_entity.collection')) {
+    $links['localgov_tasty_backend.entity.geo_entity.collection'] = [
+      'title' => t('Locations'),
+      'route_name' => 'entity.geo_entity.collection',
+      'parent' => 'localgov_tasty_backend.manage_site_page',
+      'menu_name' => 'tb-manage',
+    ];
+  }
+  // Directory facet types.
+  if (_localgov_tasty_backend_route_exists('entity.localgov_directories_facets_type.collection')) {
+    $links['localgov_tasty_backend.entity.localgov_directories_facets_type.collection'] = [
+      'title' => t('Directory facet types'),
+      'route_name' => 'entity.localgov_directories_facets_type.collection',
+      'parent' => 'localgov_tasty_backend.manage_site_page',
+      'menu_name' => 'tb-manage',
+    ];
+  }
+  // Directory facets.
+  if (_localgov_tasty_backend_route_exists('entity.localgov_directories_facets.collection')) {
+    $links['localgov_tasty_backend.entity.localgov_directories_facets.collection'] = [
+      'title' => t('Directory facets'),
+      'route_name' => 'entity.localgov_directories_facets.collection',
+      'parent' => 'localgov_tasty_backend.manage_site_page',
+      'menu_name' => 'tb-manage',
+    ];
+  }
+  // Scheduled transitions.
+  if (_localgov_tasty_backend_route_exists('entity.scheduled_transition.collection')) {
+    $links['localgov_tasty_backend.entity.scheduled_transition.collection'] = [
+      'title' => t('Scheduled Transitions'),
+      'route_name' => 'entity.scheduled_transition.collection',
+      'parent' => 'localgov_tasty_backend.manage_site_page',
+      'menu_name' => 'tb-manage',
+    ];
+  }
+  // Locked content.
+  if (_localgov_tasty_backend_route_exists('view.locked_content.page_1')) {
+    $links['localgov_tasty_backend.view.locked_content.page_1'] = [
+      'title' => t('Locked content'),
+      'route_name' => 'view.locked_content.page_1',
+      'parent' => 'localgov_tasty_backend.manage_site_page',
+      'menu_name' => 'tb-manage',
+    ];
+  }
+  // Fix 404 pages.
+  if (_localgov_tasty_backend_route_exists('view.redirect_404.page_1')) {
+    $links['localgov_tasty_backend.view.locked_content.page_1'] = [
+      'title' => t('Fix 404 pages'),
+      'route_name' => 'view.redirect_404.page_1',
+      'parent' => 'localgov_tasty_backend.manage_site_page',
+      'menu_name' => 'tb-manage',
+    ];
+  }
+}
+
+/**
+ * Check if a route exits without raising exception.
+ *
+ * @param string $route_to_check
+ *   String of Drupal route to check.
+ *
+ * @return bool
+ *   TRUE if route exists.
+ *   FALSE otherwise.
+ */
+function _localgov_tasty_backend_route_exists(string $route_to_check) :bool {
+  try {
+    \Drupal::service('router.route_provider')
+      ->getRouteByName($route_to_check);
+  }
+  catch (RouteNotFoundException $exception) {
+    return FALSE;
+  }
+  return TRUE;
 }
