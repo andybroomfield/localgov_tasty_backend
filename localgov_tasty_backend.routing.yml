@@ -1,3 +1,10 @@
+localgov_tasty_backend.moderate_content_page:
+  path: '/admin/manage/moderate-content'
+  defaults:
+    _controller: '\Drupal\tasty_backend\Controller\TastyBackendController::menuBlockContents'
+    _title: 'Moderate content'
+  requirements:
+    _permission: 'access tasty backend admin pages'
 localgov_tasty_backend.manage_site_page:
   path: '/admin/manage/site'
   defaults:

@@ -73,6 +73,45 @@ function localgov_tasty_backend_localgov_roles_default(): array {
  */
 function localgov_tasty_backend_menu_links_discovered_alter(&$links) {
 
+  // Populate the moderate content menu.
+  // Content moderation.
+  if (_localgov_tasty_backend_route_exists('view.moderated_content.moderated_content')) {
+    $links['localgov_tasty_backend.view.moderated_content.moderated_content'] = [
+      'title' => t('Moderated content'),
+      'route_name' => 'view.moderated_content.moderated_content',
+      'parent' => 'localgov_tasty_backend.moderate_content_page',
+      'menu_name' => 'tb-manage',
+      'weight' => -1,
+    ];
+  }
+  elseif (_localgov_tasty_backend_route_exists('content_moderation.admin_moderated_content')) {
+    $links['localgov_tasty_backend.content_moderation.admin_moderated_content'] = [
+      'title' => t('Moderated content'),
+      'route_name' => 'content_moderation.admin_moderated_content',
+      'parent' => 'localgov_tasty_backend.moderate_content_page',
+      'menu_name' => 'tb-manage',
+      'weight' => -1,
+    ];
+  }
+  // Approve content.
+  if (_localgov_tasty_backend_route_exists('view.localgov_approvals_dashboard.approvals_dashboard')) {
+    $links['localgov_tasty_backend.view.localgov_approvals_dashboard.approvals_dashboard'] = [
+      'title' => t('Approve content'),
+      'route_name' => 'view.localgov_approvals_dashboard.approvals_dashboard',
+      'parent' => 'localgov_tasty_backend.moderate_content_page',
+      'menu_name' => 'tb-manage',
+    ];
+  }
+  // Review content.
+  if (_localgov_tasty_backend_route_exists('view.localgov_needs_review.needs_review')) {
+    $links['localgov_tasty_backend.view.localgov_needs_review.needs_review'] = [
+      'title' => t('Review content'),
+      'route_name' => 'view.localgov_needs_review.needs_review',
+      'parent' => 'localgov_tasty_backend.moderate_content_page',
+      'menu_name' => 'tb-manage',
+    ];
+  }
+
   // Populate the site features menu.
   // URL alias.
   if (_localgov_tasty_backend_route_exists('entity.path_alias.collection')) {
