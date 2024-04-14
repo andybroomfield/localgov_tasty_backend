@@ -206,6 +206,15 @@ function localgov_tasty_backend_menu_links_discovered_alter(&$links) {
 }
 
 /**
+ * Implements hook_toolbar_alter().
+ */
+function localgov_tasty_backend_toolbar_alter(&$items) {
+  if (!empty($items['administration'])) {
+    $items['administration']['tab']['#title'] = t('Administration');
+  }
+}
+
+/**
  * Check if a route exits without raising exception.
  *
  * @param string $route_to_check
