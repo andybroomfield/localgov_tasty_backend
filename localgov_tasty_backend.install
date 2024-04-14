@@ -31,7 +31,7 @@ function localgov_tasty_backend_install($is_syncing) {
   // Rename the manage menu to administration.
   \Drupal::configFactory()
     ->getEditable('toolbar_menu.toolbar_menu_element.tb_manage')
-    ->set('label', 'Administration')
+    ->set('label', 'Manage website')
     ->save();
 
   // Delete tasty backend user_admin role in favour of localgov_user_manager.
