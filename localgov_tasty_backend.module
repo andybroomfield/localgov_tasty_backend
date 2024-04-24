@@ -189,7 +189,7 @@ function localgov_tasty_backend_menu_links_discovered_alter(&$links) {
   // Scheduled transitions.
   if (_localgov_tasty_backend_route_exists('entity.scheduled_transition.collection')) {
     $links['localgov_tasty_backend.entity.scheduled_transition.collection'] = [
-      'title' => t('Scheduled Transitions'),
+      'title' => t('Scheduling'),
       'route_name' => 'entity.scheduled_transition.collection',
       'parent' => 'localgov_tasty_backend.manage_site_page',
       'menu_name' => 'tb-manage',
