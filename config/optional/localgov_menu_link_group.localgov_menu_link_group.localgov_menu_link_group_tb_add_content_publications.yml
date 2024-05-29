@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies: {  }
+id: localgov_menu_link_group_tb_add_content_publications
+group_label: Publications
+weight: 1
+parent_menu: tb-manage
+parent_menu_link: tasty_backend.add_content
+child_menu_links:
+  - tasty_backend.node.add.localgov_publication_cover_page
+  - tasty_backend.node.add.localgov_publication_page

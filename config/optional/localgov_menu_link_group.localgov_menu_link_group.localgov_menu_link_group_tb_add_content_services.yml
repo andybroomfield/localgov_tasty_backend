@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+id: localgov_menu_link_group_tb_add_content_services
+group_label: Services
+weight: 1
+parent_menu: tb-manage
+parent_menu_link: tasty_backend.add_content
+child_menu_links:
+  - tasty_backend.node.add.localgov_services_landing
+  - tasty_backend.node.add.localgov_services_page
+  - tasty_backend.node.add.localgov_services_status
+  - tasty_backend.node.add.localgov_services_sublanding
