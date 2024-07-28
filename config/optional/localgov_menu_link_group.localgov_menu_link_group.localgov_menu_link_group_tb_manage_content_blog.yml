@@ -1,7 +1,13 @@
-uuid: 0c04a873-6b78-4a61-ad6a-224c6ff765ee
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - system.menu.tb-manage
+  enforced:
+      module:
+        - localgov_tasty_backend
+        - localgov_blogs
+        - localgov_menu_link_group
 id: localgov_menu_link_group_tb_manage_content_blog
 group_label: Blog
 weight: 2

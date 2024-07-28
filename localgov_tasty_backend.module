@@ -244,3 +244,43 @@ function _localgov_tasty_backend_route_exists(string $route_to_check) :bool {
   }
   return TRUE;
 }
+
+/**
+ * Implements hook_modulea_installed().
+ */
+function localgov_tasty_backend_modules_installed(array $modules, bool $is_syncing) {
+
+  // Return if this is a config sync operation.
+  if ($is_syncing) {
+    return;
+  }
+
+  // Modules to act on.
+  $modules_with_config = [
+    'localgov_blogs',
+    'localgov_directories',
+    'localgov_guides',
+    'localgov_news',
+    'localgov_publications',
+    'localgov_services',
+    'localgov_step_by_step',
+    'localgov_subsites',
+  ];
+
+  // Flag install optional config if any of the above modules being installed.
+  $install_optional_config = FALSE;
+  foreach ($modules as $module) {
+    if (in_array($module, $modules_with_config, TRUE)) {
+      $install_optional_config = TRUE;
+    }
+  }
+
+  // This will install all optional config that depends on tb_menu.
+  // Note: This will install any other optional config from other modules too.
+  if ($install_optional_config) {
+    \Drupal::service('config.installer')->installOptionalConfig(NULL, [
+      'config' => 'system.menu.tb-manage',
+      'module' => 'localgov_tasty_backend',
+    ]);
+  }
+}

@@ -1,6 +1,13 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - system.menu.tb-manage
+  enforced:
+      module:
+        - localgov_tasty_backend
+        - localgov_publications
+        - localgov_menu_link_group
 id: localgov_menu_link_group_tb_manage_content_publications
 group_label: Publications
 weight: 2
