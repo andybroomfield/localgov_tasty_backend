@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.tb-manage
+  enforced:
+      module:
+        - localgov_tasty_backend
+        - localgov_step_by_step
+        - localgov_menu_link_group
+id: localgov_menu_link_group_tb_add_content_step_by_step
+group_label: 'Step by step'
+weight: 1
+parent_menu: tb-manage
+parent_menu_link: tasty_backend.add_content
+child_menu_links:
+  - tasty_backend.node.add.localgov_step_by_step_overview
+  - tasty_backend.node.add.localgov_step_by_step_page
