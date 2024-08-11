@@ -24,6 +24,7 @@ function localgov_tasty_backend_localgov_roles_default(): array {
     RolesHelper::EDITOR_ROLE => $tb_permissions,
     RolesHelper::AUTHOR_ROLE => $tb_permissions,
     RolesHelper::CONTRIBUTOR_ROLE => $tb_permissions,
+    'emergency_publisher' => $tb_permissions,
 
     // Allow user manager to assign content admin role.
     RolesHelper::USER_MANAGER_ROLE => [
