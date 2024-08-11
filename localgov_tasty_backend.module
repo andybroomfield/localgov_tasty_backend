@@ -63,6 +63,16 @@ function localgov_tasty_backend_localgov_roles_default(): array {
       $perms[$role->id()][] = 'access tasty backend media admin pages';
     }
 
+    // Assign tasty backends content admin all transition moderation permissions
+    // on the localgov_editoral workflow.
+    if (\Drupal::entityTypeManager()->hasDefinition('workflow')) {
+      $content_moderation = \Drupal::entityTypeManager()->getStorage('workflow')->load('localgov_editorial');
+      $perms['content_admin'][] = 'view any unpublished content';
+      $transitions = array_keys($content_moderation->getTypePlugin()->getTransitions());
+      foreach ($transitions as $transition_id) {
+        $perms['content_admin'][] = 'use localgov_editorial transition ' . $transition_id;
+      }
+    }
   }
 
   return $perms;
