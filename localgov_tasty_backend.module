@@ -307,7 +307,7 @@ function localgov_tasty_backend_preprocess_toolbar(&$variables) {
   $admin_theme_name = \Drupal::service('theme_handler')->getName($admin_theme);
   if ($admin_theme_name == 'Gin') {
 
-    $toolbar_variant = $variables['toolbar_variant'];
+    $toolbar_variant = $variables['toolbar_variant'] ?? '';
 
     // Remove the extra padding added by Gin theme to <nolink> parent menus.
     if ($toolbar_variant == 'classic') {
