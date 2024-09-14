@@ -301,11 +301,18 @@ function localgov_tasty_backend_modules_installed(array $modules, bool $is_synci
  * Implements hook_preprocess_HOOK() for toolbar.
  */
 function localgov_tasty_backend_preprocess_toolbar(&$variables) {
-  $toolbar_variant = $variables['toolbar_variant'];
 
-  // Remove the extra padding added by Gin theme to <nolink> parent menus.
-  if ($toolbar_variant == 'classic') {
-    $variables['#attached']['library'][] = 'localgov_tasty_backend/classic_toolbar_tweaks';
+  // Apply alterations only with Gin theme.
+  $admin_theme = \Drupal::config('system.theme')->get('admin');
+  $admin_theme_name = \Drupal::service('theme_handler')->getName($admin_theme);
+  if ($admin_theme_name == 'Gin') {
+
+    $toolbar_variant = $variables['toolbar_variant'];
+
+    // Remove the extra padding added by Gin theme to <nolink> parent menus.
+    if ($toolbar_variant == 'classic') {
+      $variables['#attached']['library'][] = 'localgov_tasty_backend/classic_toolbar_tweaks';
+    }
   }
 }
 
