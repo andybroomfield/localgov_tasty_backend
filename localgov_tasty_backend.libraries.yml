@@ -1,0 +1,7 @@
+classic_toolbar_tweaks:
+  version: VERSION
+  css:
+    theme:
+      css/classic-toolbar-tweaks.css: {}
+  dependencies:
+    - gin/gin_classic_toolbar
